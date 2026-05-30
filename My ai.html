@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ultra AI</title>
+
+<style>
+
+body{
+margin:0;
+font-family:system-ui;
+display:flex;
+height:100vh;
+background:#f4f4f4;
+transition:.3s;
+}
+
+.dark{
+background:#181818;
+color:white;
+}
+
+.sidebar{
+width:260px;
+background:#202123;
+color:white;
+display:flex;
+flex-direction:column;
+transition:.3s;
+}
+
+.sidebar.collapsed{
+width:0;
+overflow:hidden;
+}
+
+.sidebar button{
+margin:10px;
+padding:10px;
+background:#343541;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+.chatlist{
+flex:1;
+overflow:auto;
+}
+
+.chatitem{
+padding:10px;
+cursor:pointer;
+}
+
+.chatitem:hover{
+background:#3e3f4b;
+}
+
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+padding:10px;
+background:#ececec;
+}
+
+.dark .topbar{
+background:#2b2b2b;
+}
+
+.messages{
+flex:1;
+overflow:auto;
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.msg{
+padding:12px;
+border-radius:10px;
+max-width:65%;
+position:relative;
+animation:fade .3s;
+}
+
+.user{
+align-self:flex-end;
+background:#4f46e5;
+color:white;
+}
+
+.bot{
+align-self:flex-start;
+background:#e5e5e5;
+}
+
+.dark .bot{
+background:#333;
+}
+
+.copy{
+position:absolute;
+top:5px;
+right:6px;
+cursor:pointer;
+font-size:12px;
+opacity:.6;
+}
+
+.copy:hover{opacity:1}
+
+.inputbar{
+display:flex;
+gap:8px;
+padding:10px;
+border-top:1px solid #ccc;
+}
+
+.inputbar input{
+flex:1;
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+cursor:pointer;
+}
+
+.typing{
+font-size:13px;
+opacity:.7;
+}
+
+@keyframes fade{
+from{opacity:0; transform:translateY(10px)}
+to{opacity:1}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar" id="sidebar">
+
+<button onclick="newChat()">+ New Chat</button>
+
+<div class="chatlist" id="chatlist"></div>
+
+</div>
+
+<div class="main">
+
+<div class="topbar">
+
+<button onclick="toggleSidebar()">☰</button>
+
+<div>
+<button onclick="toggleTheme()">🌙</button>
+<button onclick="startVoice()">🎤</button>
+<input type="file" id="file" style="display:none">
+<button onclick="upload()">📎</button>
+<button onclick="generateImage()">🖼</button>
+</div>
+
+</div>
+
+<div class="messages" id="messages"></div>
+
+<div class="inputbar">
+
+<input id="input" placeholder="Ask anything...">
+
+<button onclick="send()">Send</button>
+
+</div>
+
+</div>
+
+<script>
+
+let chats=JSON.parse(localStorage.getItem("chats"))||{}
+let current="chat1"
+
+if(!chats[current]) chats[current]=[]
+
+function save(){
+localStorage.setItem("chats",JSON.stringify(chats))
+}
+
+function renderChats(){
+
+let list=document.getElementById("chatlist")
+list.innerHTML=""
+
+for(let id in chats){
+
+let div=document.createElement("div")
+div.className="chatitem"
+div.innerText=id
+div.onclick=()=>{
+
+current=id
+loadChat()
+
+}
+
+list.appendChild(div)
+
+}
+
+}
+
+function newChat(){
+
+current="chat"+Date.now()
+chats[current]=[]
+renderChats()
+loadChat()
+save()
+
+}
+
+function loadChat(){
+
+let box=document.getElementById("messages")
+box.innerHTML=""
+
+chats[current].forEach(m=>addMsg(m.text,m.type,false))
+
+}
+
+function addMsg(text,type,saveMsg=true){
+
+let box=document.getElementById("messages")
+
+let div=document.createElement("div")
+div.className="msg "+type
+div.innerHTML=text+'<span class="copy" onclick="copy(this)">📋</span>'
+
+box.appendChild(div)
+
+box.scrollTop=box.scrollHeight
+
+if(saveMsg){
+
+chats[current].push({text,type})
+save()
+
+}
+
+}
+
+function send(){
+
+let input=document.getElementById("input")
+let text=input.value.trim()
+
+if(!text) return
+
+addMsg(text,"user")
+
+input.value=""
+
+aiResponse(text)
+
+}
+
+function aiResponse(text){
+
+let box=document.getElementById("messages")
+
+let typing=document.createElement("div")
+typing.className="typing"
+typing.innerText="AI typing..."
+box.appendChild(typing)
+
+setTimeout(()=>{
+
+typing.remove()
+
+let reply="This is a simulated AI response for: "+text
+
+stream(reply)
+
+},800)
+
+}
+
+function stream(text){
+
+let words=text.split(" ")
+let msg=""
+
+let div=document.createElement("div")
+div.className="msg bot"
+document.getElementById("messages").appendChild(div)
+
+let i=0
+
+let interval=setInterval(()=>{
+
+msg+=words[i]+" "
+div.innerHTML=msg+'<span class="copy" onclick="copy(this)">📋</span>'
+
+i++
+
+if(i>=words.length){
+
+clearInterval(interval)
+
+chats[current].push({text:msg,type:"bot"})
+save()
+
+}
+
+},80)
+
+}
+
+function copy(el){
+
+let text=el.parentElement.innerText.replace("📋","")
+navigator.clipboard.writeText(text)
+
+}
+
+function toggleSidebar(){
+document.getElementById("sidebar").classList.toggle("collapsed")
+}
+
+function toggleTheme(){
+document.body.classList.toggle("dark")
+}
+
+function upload(){
+document.getElementById("file").click()
+}
+
+document.getElementById("file").onchange=e=>{
+
+let file=e.target.files[0]
+
+if(file){
+addMsg("Uploaded: "+file.name,"user")
+}
+
+}
+
+function generateImage(){
+
+let prompt=prompt("Enter image prompt")
+
+if(!prompt) return
+
+let url="https://picsum.photos/400?random="+Math.random()
+
+addMsg("Image for: "+prompt+"<br><img src='"+url+"' width='200'>","bot")
+
+}
+
+function startVoice(){
+
+let rec=new webkitSpeechRecognition()
+
+rec.onresult=e=>{
+document.getElementById("input").value=e.results[0][0].transcript
+}
+
+rec.start()
+
+}
+
+renderChats()
+loadChat()
+
+</script>
+
+</body>
+</html>
