@@ -1,51 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-  <!-- My CSS -->
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Font Awesome -->
-  <script src="https://kit.fontawesome.com/996973c893.js"></script>
-
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;500;600;700;800&family=Roboto+Slab:wght@200;400;600;900&display=swap"
-    rel="stylesheet" />
-
-  <title>Portfolio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Susan's Restaurant</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="container-fluid navigation pt-3">
-    <div class="row">
-      <div class="col-6 d-flex justify-content-start align-items-center">
-        <i class="fas fa-code fa-2x text-warning pb-3"></i>
-        <h5 class="d-inline pl-2 text-white">CODINGAL</h5>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">Susan's Kitchen</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Banner Section -->
+  <section class="banner" id="home">
+    <div class="banner-content">
+      <h1>Welcome to Susan's Kitchen</h1>
+      <p>Delicious food made with fresh ingredients</p>
+      <a href="#portfolio" class="btn">View Our Dishes</a>
+    </div>
+  </section>
+
+  <!-- Section 1: About / Specialties -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <h2>About Our Restaurant</h2>
+      <p class="section-desc">At Susan's Kitchen, we blend passion with fresh ingredients to serve delicious meals every day.</p>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>Fresh Ingredients</h3>
+          <p>We source all of our vegetables and meats daily from local farms to ensure maximum quality and flavor.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Master Chefs</h3>
+          <p>Our experienced chefs craft each meal with precision, attention to detail, and a touch of passion.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Cozy Atmosphere</h3>
+          <p>Enjoy your dining experience in a warm, welcoming environment designed for family and friends.</p>
+        </div>
       </div>
-      <div class="col-6 pt-2">
-        <div class="row text-center p-0 d-flex justify-content-end align-items-center">
-          <div class="col-3">
-            <a href="jai.html" class="text-white navigation-link">About</a>
+    </div>
+  </section>
+
+  <!-- Section 2: Dish Portfolio Gallery -->
+  <section class="portfolio-section" id="portfolio">
+    <div class="container">
+      <h2>Our Culinary Portfolio</h2>
+      <p class="section-desc">Take a look at some of our signature dishes created with care.</p>
+
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Fresh Salad Bowl">
+          <div class="portfolio-info">
+            <h3>Gourmet Salad</h3>
+            <p>Fresh greens, avocado, and house dressing</p>
           </div>
-          <div class="col-3">
-            <a href="#projects" class="text-white navigation-link">Projects</a>
+        </div>
+
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Artisan Pizza">
+          <div class="portfolio-info">
+            <h3>Woodfired Pizza</h3>
+            <p>Crispy crust with mozzarella and fresh basil</p>
           </div>
-          <div class="col-3">
-            <a href="#social-media" class="text-white navigation-link">Social Media</a>
+        </div>
+
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Signature Burger">
+          <div class="portfolio-info">
+            <h3>Signature Burger</h3>
+            <p>Juicy beef patty with cheddar cheese and fries</p>
           </div>
-          <div class="col-3">
-            <a href="https://packetcode.github.io/web-development-crash-course/resume-mini-project/" target="_blank"
-              class="text-white navigation-link">Resume</a>
+        </div>
+
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80" alt="Italian Pasta">
+          <div class="portfolio-info">
+            <h3>Creamy Pasta</h3>
+            <p>Handmade pasta tossed in rich garlic cream sauce</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Grilled Steak">
+          <div class="portfolio-info">
+            <h3>Grilled Ribeye</h3>
+            <p>Tender steak seasoned and cooked to perfection</p>
+          </div>
+        </div>
+
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Chocolate Dessert">
+          <div class="portfolio-info">
+            <h3>Special Dessert</h3>
+            <p>Rich chocolate cake topped with berries</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
 </body>
 </html>
